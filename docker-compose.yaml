@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  bot:
+    build:
+      dockerfile: ./Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - '8080:8080'
+    tty: true
+    stdin_open: true
+    networks:
+      - missing-pets
+
+  mensageria:
+    image: rabbitmq:management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    networks:
+      - missing-pets
