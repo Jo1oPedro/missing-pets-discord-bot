@@ -3,23 +3,14 @@ version: '3'
 services:
   bot:
     build:
-      dockerfile: ./Dockerfile
+      dockerfile: ./docker/Dockerfile
     volumes:
-      - .:/app
-    ports:
-      - '8080:8080'
+      - .:/var/www/app
     tty: true
     stdin_open: true
     networks:
-      - missing-pets
+      - missing-pets_my-shared-network
 
-  mensageria:
-    image: rabbitmq:management
-    ports:
-      - '5672:5672'
-      - '15672:15672'
-    environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
-    networks:
-      - missing-pets
+networks:
+  missing-pets_my-shared-network:
+    external: true
